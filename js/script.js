@@ -5,9 +5,10 @@ const api_key = "Cfc6Jld9ZaYQhpxgdaMfI97gkeW29ahu"
 
 const searchInput = document.querySelector("#search-input");
 const gifContainer = document.querySelector("#gif-container");
+const fetchButton = document.querySelector("#fetch-gif-btn");
 
 async function getGifs(searchTerm = "cats") {
-    const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=Cfc6Jld9ZaYQhpxgdaMfI97gkeW29ahu&q=cats&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
+    const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=Cfc6Jld9ZaYQhpxgdaMfI97gkeW29ahu&q=${searchTerm}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
     
     const response = await fetch(endpoint);
     const data = await response.json();
@@ -30,14 +31,8 @@ async function getGifs(searchTerm = "cats") {
     }
 }
 
-getGifs();
-
-searchInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        const term = searchInput.ariaValueMax.trim();
-        if (term !== "") {
-            getGifs(term);
-        }
-    }
+fetchButton.addEventListener("click", () => {
+    const term = searchInput.value.trim() || "cats";
+    getGifs(term);
 })
 
